@@ -1,5 +1,5 @@
-import win32api, win32gui, win32ui
-import numpy as np
+import win32api, win32gui
+import pyautogui
 
 class Model:
 
@@ -34,6 +34,7 @@ class Model:
         else:
             self.window = title
             return title
+
 
     def get_all_windows(self):
         '''
@@ -98,6 +99,7 @@ class Model:
 
         x = tempt[0] - windowRec[0]
         y = tempt[1] - windowRec[1]
+        print(self.hwnd, hwnd)
         return [x, y]
 
     
@@ -110,3 +112,16 @@ class Model:
         else:
             hwnd = self.inner_hwnds_dict[inner_window_name]
         return hwnd
+
+
+    def get_color(self):
+        x = win32api.GetCursorPos()[0]
+        y = win32api.GetCursorPos()[1]
+        rgb = pyautogui.screenshot().getpixel((x, y))
+        r = int(str(rgb[0]).rjust(3))
+        g = int(str(rgb[1]).rjust(3))
+        b = int(str(rgb[2]).rjust(3))
+        # hex_c = rgb2hex(int(r), int(g), int(b))
+        return [r, g, b]
+
+

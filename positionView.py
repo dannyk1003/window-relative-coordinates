@@ -17,6 +17,7 @@ class View():
         self.inner_window = ''
         self.count = 0
         self.position = [0, 0]
+        self.color = [0, 0, 0]
 
         
         self.root.title('my window position detector')
@@ -146,9 +147,13 @@ class View():
             self.controller.on_add_history(self.inner_window)
             self.count += 1
             textbox.configure(state='normal')
-            textbox.insert('insert', f'{self.count}. position : {self.position} \n')
-            print(f'{self.count}. position : {self.position}')
+            textbox.insert('insert', f'{self.count}. position : {self.position}, ')
+            textbox.insert('insert', f'color : {self.color} \n')
+            # textbox.config(fg = "#%02x%02x%02x" % tuple(self.color))
+            box.config(bg = "#%02x%02x%02x" % tuple(self.color))
+            print(f'{self.count}. position : {self.position}, color : {self.color}')
             textbox.configure(state='disabled')
+
 
         def clear_func(event):
             self.count = 0
@@ -165,12 +170,21 @@ class View():
         label_Text.set('position history as below: \n please press ctrl + A to Add, ctrl + C to clean')
         label.pack()
 
-        textbox = tk.Text(self.root, width=50, height=50)
+        textbox = tk.Text(self.root, width=60, height=20)
         textbox.configure(state='disabled')
         textbox.pack()
 
+        box = tk.Label(self.root, width=5, height=2)
+        box.configure(state='disabled')
+        box.config(bg = "#%02x%02x%02x" % tuple(self.color))
+        box.pack()
 
         self.root.bind('<Control-a>', position_func)
         self.root.bind('<Control-c>', clear_func)
 
         
+    def _make_colorBox(self):
+
+        box = tk.Text(self.root, width=5, height=5)
+
+        box.config(bg = "#%02x%02x%02x" % tuple(self.color))

@@ -23,5 +23,7 @@ class Controller:
     
     def on_add_history(self, window):
         hwnd = self.model.get_inner_hwnd(window)
-        result = self.model.positionInWindow(hwnd)
-        self.view.position = result
+        position = self.model.positionInWindow(hwnd)
+        color = self.model.get_color()
+        self.view.position = position
+        self.view.color = color
